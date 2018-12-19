@@ -86,15 +86,15 @@ impl BatteryLogic {
         else 
         {
             match cap {
-                0 ... 50 => {
+                0 ... 9 => {
                     self.status = BatteryStatus::Fatal;
                     (true, 2, true)
                 }
-                51... 60 => {
+                10... 14 => {
                     self.status = BatteryStatus::Critical;
                     (true, 10, false)
                 }
-                61 ... 80 => {
+                14 ... 20 => {
                     self.status = BatteryStatus::Warning;
                     (true, 60, false)
                 }
