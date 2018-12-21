@@ -1,0 +1,8 @@
+fatal_wait: 2
+fatal_limit: 10
+critical_wait: 10
+critical_limit: 15
+warning_wait: 60
+warning_limit: 20
+normal_wait: 75
+charging_wait: 90

@@ -14,7 +14,7 @@ static BANNER_WIDTH: u32 = 392;
 fn main() {
     // Build my window with SDL2 backend
     //
-    let mut window: PistonWindow<Sdl2Window> = WindowSettings::new("Battery Nagger", [WIN_WIDTH, WIN_HEIGHT])
+    let mut window: PistonWindow<Sdl2Window> = WindowSettings::new("Battery Nagger 2", [WIN_WIDTH, WIN_HEIGHT])
         .build()
         .unwrap();
 

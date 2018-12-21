@@ -1,3 +1,8 @@
+#[macro_use]
+extern crate serde_derive;
+
+
+pub mod data_yaml;
 pub mod colordefs;
 
 pub mod timer;

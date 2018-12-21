@@ -1,3 +1,4 @@
+use data_yaml;
 use timer;
 
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -12,6 +13,7 @@ pub enum BatteryStatus {
 pub struct BatteryLogic {
     cap: u8, 
     countdown: u64,
+    configuration: data_yaml::Conf,
     firstfatal : bool,
     status : BatteryStatus,
     timer: timer::TimerObject,
@@ -21,9 +23,12 @@ pub struct BatteryLogic {
 // bell, waitsec, fatal
 impl BatteryLogic {
     pub fn new(timeout_in_secs: u64) -> BatteryLogic {
+        let c = data_yaml::Conf::new();
+
         BatteryLogic { 
             cap: 100,
             countdown: 999, 
+            configuration: c,
             firstfatal : true, 
             status : BatteryStatus::Normal,
             updatetimer: timer::TimerObject::new(1, None),
@@ -81,26 +86,26 @@ impl BatteryLogic {
 
         if ischarging {
             self.status = BatteryStatus::Charging;
-             (false, 600, false)
+             (false, self.configuration.charging_wait, false)
         }
         else 
         {
             match cap {
-                0 ... 9 => {
+                _ if cap as u64 <= self.configuration.fatal_limit  => {
                     self.status = BatteryStatus::Fatal;
-                    (true, 2, true)
+                    (true, self.configuration.fatal_wait, true)
                 }
-                10... 14 => {
+                _ if cap as u64 <= self.configuration.critical_limit => {
                     self.status = BatteryStatus::Critical;
-                    (true, 10, false)
+                    (true, self.configuration.critical_wait, false)
                 }
-                14 ... 20 => {
+                _ if cap as u64 <= self.configuration.warning_limit => {
                     self.status = BatteryStatus::Warning;
-                    (true, 60, false)
+                    (true, self.configuration.warning_wait, false)
                 }
                 _ => {
                     self.status = BatteryStatus::Normal;
-                    (false, 120, false)
+                    (false, self.configuration.normal_wait, false)
                 }
             }
         }
