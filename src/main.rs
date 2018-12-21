@@ -1,6 +1,6 @@
 extern crate piston_window;
-extern crate music;
 extern crate sdl2_window;
+
 use piston_window::*;
 use sdl2_window::Sdl2Window;
 
