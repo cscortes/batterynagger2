@@ -1,6 +1,6 @@
-use batterylogic;
-use timer;
-use colordefs;
+use crate::batterylogic;
+use crate::timer;
+use crate::colordefs;
 
 pub struct Blinker {
     state_is_on: bool,
